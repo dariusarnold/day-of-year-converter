@@ -4,8 +4,6 @@
 //https://github.com/jarro2783/cxxopts
 #include "cxxopts.hpp"
 
-using namespace std;
-
 int monthdays[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 std::string monthnames[] = {"January", "February", "March", "April", "May", "June", "Juli", "August", "September", "October", "November", "December"};
 int year, month, day, doy;
@@ -45,9 +43,9 @@ int main(int argc, char *argv[]) {
 
     else if (argc == 2){
         //expected input is doy
-        istringstream iss(argv[1]);
+        std::istringstream iss(argv[1]);
         if (!(iss >> doy) or doy <= 0){
-            cerr << "Invalid argument doy: " << doy << endl;
+            std::cerr << "Invalid argument doy: " << doy << std::endl;
             return 1;
         }
         std::string date;
@@ -64,9 +62,9 @@ int main(int argc, char *argv[]) {
     else if (argc == 3){
         //input is doy yyyy, handle leap years by checking for them
         int doy, year;
-        istringstream iss(argv[1]);
+        std::istringstream iss(argv[1]);
         if (!(iss >> doy) or doy <= 0){
-            std::cerr << "Invalid argument doy: " << doy << endl;
+            std::cerr << "Invalid argument doy: " << doy << std::endl;
             return 1;
         }
         iss.clear();
@@ -81,29 +79,29 @@ int main(int argc, char *argv[]) {
 
     else if (argc == 4){
         //expected input is yyyy mm dd
-        istringstream iss(argv[1]);
+        std::istringstream iss(argv[1]);
         if (!(iss >> year)){
-            cerr << "Invalid argument year: " << year << endl;
+            std::cerr << "Invalid argument year: " << year << std::endl;
         }
         iss.clear();
         iss.str(argv[2]);
         if (!(iss >> month)){
-            cerr << "Invalid argument month: " << month << endl;
+            std::cerr << "Invalid argument month: " << month << std::endl;
         }
         iss.clear();
         iss.str(argv[3]);
         if (!(iss >> day)){
-            cerr << "Invalid argument day: " << day << endl;
+            std::cerr << "Invalid argument day: " << day << std::endl;
         }
         doy = toDoy(year, month-1, day);
     }
     else if (argc > 4){
-        cerr << "Too many arguments!" << endl;
+        std::cerr << "Too many arguments!" << std::endl;
         return -1;
     }
 
     if (doy != -1){
-        cout << doy << endl;
+        std::cout << doy << std::endl;
         return 0;
     }
     else{
@@ -119,7 +117,7 @@ int toDoy(int year, int month, int day){
     
     // check inputs
     if (month < 0 or month > 11 or day < 0 or day > 31){
-        cerr << "Invalid date given" << endl;
+        std::cerr << "Invalid date given" << std::endl;
         return -1;
     }
 
