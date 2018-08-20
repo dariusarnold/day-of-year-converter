@@ -13,10 +13,10 @@ public:
      */
     Date(int year, int doy);
 
-    int getDoy();
-    int getYear();
-    int getMonth();
-    int getDay();
+    int getDoy() const;
+    int getYear() const;
+    int getMonth() const;
+    int getDay() const;
 
 private:
     /**

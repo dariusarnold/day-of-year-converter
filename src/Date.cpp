@@ -68,19 +68,19 @@ int Date::calculateDayOfYear(int year, int month, int day) {
     return doy;
 }
 
-int Date::getDoy(){
+int Date::getDoy() const{
     return m_dayOfYear;
 }
 
-int Date::getYear() {
+int Date::getYear() const{
     return m_year;
 }
 
-int Date::getMonth() {
+int Date::getMonth() const{
     return m_month;
 }
 
-int Date::getDay() {
+int Date::getDay() const{
     return m_dayOfMonth;
 }
 
