@@ -3,21 +3,38 @@
 #include <sstream>
 //https://github.com/jarro2783/cxxopts
 #include "cxxopts.hpp"
+#include "DoyConverter.h"
+#include "Date.h"
 
 int monthdays[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 std::string monthnames[] = {"January", "February", "March", "April", "May", "June", "Juli", "August", "September", "October", "November", "December"};
 int year, month, day, doy;
 
 int toDoy(int year, int month, int day);
+int toDoy(const std::tm& date);
 std::string toDate(int doy, bool leapYear=false);
 bool isLeapYear(int year);
 
+std::tm* getCurrentTime(){
+    // no arguments, get doy of current data
+    time_t t = time(0);   // get time now
+    struct tm* now = localtime(& t);
+    return now;
+}
+
+void printDoy(int doy){
+    std::cout << doy << std::endl;
+}
+
 int main(int argc, char *argv[]) {
+
+    DoyConverter converter;
+    Date date;
     
     cxxopts::Options options("DOY", "Convert between date and doy");
     options.add_options()
         ("h,help", "Show help")
-        ("l,leap", "Is a leap year");
+        ("l,leap", "Is a leap m_year");
 
     auto result = options.parse(argc, argv);
 
@@ -27,18 +44,17 @@ int main(int argc, char *argv[]) {
         std::cout << "doy - gives doy of current date" << std::endl;
         std::cout << "doy 1994 09 19 - gives doy of given date"  << std::endl;
         std::cout << "doy 205 - gives date of given doy.";
-        std::cout << "          If year is leapyear, add -l/--leap flag" << std::endl;
-        std::cout << "doy 205 2014 - gives date of given doy in year, accounting for possible leap year" << std::endl;
+        std::cout << "          If m_year is leapyear, add -l/--leap flag" << std::endl;
+        std::cout << "doy 205 2014 - gives date of given doy in m_year, accounting for possible leap m_year" << std::endl;
         return(0);
     }
     
     int doy = -1;
     
     if (argc == 1){
-        // no arguments, get doy of current data
-        time_t t = time(0);   // get time now
-        struct tm * now = localtime(& t);
-        doy = toDoy(now->tm_year, now->tm_mon, now->tm_mday);
+        std::tm* now = getCurrentTime();
+        doy = toDoy(*now);
+        printDoy(doy);
     }
 
     else if (argc == 2){
@@ -70,7 +86,7 @@ int main(int argc, char *argv[]) {
         iss.clear();
         iss.str(argv[2]);
         if (!(iss >> year)){
-            std::cerr << "Invalid argument year: " << year << std::endl;
+            std::cerr << "Invalid argument m_year: " << year << std::endl;
             return 1;
         }
         auto date = toDate(doy, isLeapYear(year));
@@ -81,19 +97,19 @@ int main(int argc, char *argv[]) {
         //expected input is yyyy mm dd
         std::istringstream iss(argv[1]);
         if (!(iss >> year)){
-            std::cerr << "Invalid argument year: " << year << std::endl;
+            std::cerr << "Invalid argument m_year: " << year << std::endl;
         }
         iss.clear();
         iss.str(argv[2]);
         if (!(iss >> month)){
-            std::cerr << "Invalid argument month: " << month << std::endl;
+            std::cerr << "Invalid argument m_month: " << month << std::endl;
         }
         iss.clear();
         iss.str(argv[3]);
         if (!(iss >> day)){
-            std::cerr << "Invalid argument day: " << day << std::endl;
+            std::cerr << "Invalid argument m_dayOfMonth: " << day << std::endl;
         }
-        doy = toDoy(year, month-1, day);
+        //doy = converter.toDoy(m_year, m_month-1, m_dayOfMonth);
     }
     else if (argc > 4){
         std::cerr << "Too many arguments!" << std::endl;
@@ -109,6 +125,10 @@ int main(int argc, char *argv[]) {
     }
 }
 
+int toDoy(const std::tm& date){
+    return toDoy(date.tm_year, date.tm_mon, date.tm_mday);
+}
+
 int toDoy(int year, int month, int day){
     /**
      * Convert date to Day of Year (doy), respecting leap years
@@ -121,7 +141,7 @@ int toDoy(int year, int month, int day){
         return -1;
     }
 
-    //month -= 1;
+    //m_month -= 1;
     if (isLeapYear(year)){
         monthdays[1] = 29;
         std::cout << "Leapyear" << std::endl;
