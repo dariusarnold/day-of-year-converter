@@ -90,3 +90,8 @@ int Date::getMonthDay(int month, int year) {
     if (isLeapYear(year) and month == 2) monthDay++;
     return monthDay;
 }
+
+std::ostream &operator<<(std::ostream& stream, const Date& object) {
+    stream << object.getYear() << "-" << object.getMonth() << "-" << object.getDay();
+    return stream;
+}

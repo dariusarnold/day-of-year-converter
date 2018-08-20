@@ -1,6 +1,8 @@
 #ifndef DOYCONVERTER_DATE_H
 #define DOYCONVERTER_DATE_H
 
+#include <iostream>
+
 class Date {
 public:
     Date();
@@ -17,6 +19,12 @@ public:
     int getYear() const;
     int getMonth() const;
     int getDay() const;
+
+    /**
+     * Print date as "YYYY-MM-DD" to ostream
+     * @return
+     */
+    friend std::ostream &operator<<(std::ostream&, const Date&);
 
 private:
     /**
