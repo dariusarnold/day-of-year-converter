@@ -1,15 +1,8 @@
 project(${CMAKE_PROJECT_NAME}_lib)
 
-set(HEADER_FILES)
-set(SOURCE_FILES)
+add_library(doylib doylib/Date.cpp doylib/DoyConverter.cpp)
 
-if (EXISTS ${SOURCE_FILES})
-    # The library contains header and source files.
-    add_library(${CMAKE_PROJECT_NAME}_lib STATIC
-            ${SOURCE_FILES}
-            ${HEADER_FILES}
-            )
-else()
-    # The library only contains header files.
-    add_library(${CMAKE_PROJECT_NAME}_lib INTERFACE)
-endif()
+set(WARNINGS -Werror -Wall -Wextra)
+
+target_compile_options(doylib PRIVATE ${WARNINGS})
+target_include_directories(doylib PUBLIC .)

@@ -3,7 +3,7 @@
 #include <sstream>
 //https://github.com/jarro2783/cxxopts
 #include "cxxopts.hpp"
-#include "DoyConverter.h"
+#include "doylib/DoyConverter.h"
 
 std::tm* getCurrentTime(){
     // no arguments, get doy of current data
