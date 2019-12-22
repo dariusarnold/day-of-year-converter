@@ -28,7 +28,7 @@ public:
      * @param doy
      * @return
      */
-    Date toDate(int doy, int year);
+    Date toDate(int year, int doy);
 
 };
 
