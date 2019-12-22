@@ -29,8 +29,8 @@ int Date::calculateMonth(int year, int doy){
     }
     int index_month = 0;
     while (daysLeft > monthDays[index_month]){
-    daysLeft -= monthDays[index_month];
-    index_month++;
+        daysLeft -= monthDays[index_month];
+        index_month++;
     }
     monthDays[1] = 28;
     return index_month+1;
