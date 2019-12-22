@@ -14,6 +14,15 @@ std::tm* getCurrentTime(){
 
 int doy, year, month, day;
 
+void print_usage() {
+    std::cout << "Usage\n";
+    std::cout << "doy            - gives doy of current date.\n";
+    std::cout << "doy YYYY MM DD - gives doy of given date.\n";
+    std::cout << "doy DOY        - gives MM-DD of given doy.\n";
+    std::cout << "                 If m_year is leapyear, add -l/--leap flag\n";
+    std::cout << "doy DOY YYYY   - gives date of given doy in year, accounting for possible leap year\”";
+}
+
 int main(int argc, char *argv[]) {
 
     DoyConverter converter;
@@ -27,12 +36,7 @@ int main(int argc, char *argv[]) {
 
     //show help/usage
     if (result.count("help")){
-        std::cout << "Usage" << std::endl;
-        std::cout << "doy - gives doy of current date" << std::endl;
-        std::cout << "doy 1994 09 19 - gives doy of given date"  << std::endl;
-        std::cout << "doy 205 - gives MM-DD of given doy.";
-        std::cout << "          If m_year is leapyear, add -l/--leap flag" << std::endl;
-        std::cout << "doy 205 2014 - gives date of given doy in year, accounting for possible leap year" << std::endl;
+        print_usage()
         return(0);
     }
 
